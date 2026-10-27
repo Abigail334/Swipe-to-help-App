@@ -1,0 +1,108 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Application user profile",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "format": "email", "maxLength": 256 },
+        "displayName": { "type": "string", "maxLength": 100 },
+        "role": { "type": "string", "enum": ["donor", "requester", "admin"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Bill": {
+      "title": "Bill",
+      "description": "User uploaded bill submitted for community support",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "firstName": { "type": "string", "maxLength": 50 },
+        "billerName": { "type": "string", "maxLength": 100 },
+        "amount": { "type": "number" },
+        "raised": { "type": "number" },
+        "dueDate": { "type": "string", "maxLength": 30 },
+        "category": { "type": "string", "enum": ["utilities", "medical", "rent", "education", "emergency", "other"] },
+        "story": { "type": "string", "maxLength": 200 },
+        "status": { "type": "string", "enum": ["active", "funded", "verified", "flagged"] },
+        "piiScrubbed": { "type": "boolean" },
+        "isVerified": { "type": "boolean" },
+        "fraudRiskScore": { "type": "number" },
+        "originalImageEncrypted": { "type": "string" },
+        "redactedImageUrl": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "billerName", "amount", "dueDate", "category"]
+    },
+    "Donation": {
+      "title": "Donation",
+      "description": "Contribution made to a bill",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "billId": { "type": "string", "maxLength": 128 },
+        "donorId": { "type": "string", "maxLength": 128 },
+        "donorName": { "type": "string", "maxLength": 100 },
+        "amount": { "type": "number" },
+        "message": { "type": "string", "maxLength": 250 },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "billId", "amount"]
+    },
+    "Report": {
+      "title": "Report",
+      "description": "Moderator report on a suspicious bill",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "billId": { "type": "string", "maxLength": 128 },
+        "reporterId": { "type": "string", "maxLength": 128 },
+        "reason": { "type": "string", "maxLength": 200 },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "billId", "reason"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "System audit log for security tracking",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "action": { "type": "string", "maxLength": 100 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "details": { "type": "string", "maxLength": 500 },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "action", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/bills/{billId}": {
+      "schema": "Bill",
+      "description": "Public scrubbed bills feed"
+    },
+    "/bills/{billId}/private/{docId}": {
+      "schema": "Bill",
+      "description": "Private original unredacted bill data restricted to owner"
+    },
+    "/donations/{donationId}": {
+      "schema": "Donation",
+      "description": "Donations ledger"
+    },
+    "/reports/{reportId}": {
+      "schema": "Report",
+      "description": "Moderation reports"
+    },
+    "/auditLogs/{logId}": {
+      "schema": "AuditLog",
+      "description": "Security audit logs"
+    }
+  }
+}

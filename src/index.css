@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-primary: #FF4D6D;
+    --color-secondary: #7C3AED;
+    --color-accent-yellow: #FFD60A;
+    --color-accent-mint: #2DD4BF;
+    --bg-light-gradient: linear-gradient(135deg, #fff1f2 0%, #fae8ff 50%, #f0fdf4 100%);
+    --bg-dark: #0F0A1F;
+    --font-heading: 'Nunito', sans-serif;
+    --font-body: 'Inter', sans-serif;
+  }
+
+  body {
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+@keyframes floatBlob {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+.animate-blob {
+  animation: floatBlob 12s ease-in-out infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-blob, .animate-pulse, .animate-spin {
+    animation: none !important;
+  }
+}

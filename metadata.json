@@ -1,0 +1,6 @@
+{
+  "name": "SwipeToHelp",
+  "description": "Swipe right to pay bills and help people in need with AI-powered privacy protection.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
